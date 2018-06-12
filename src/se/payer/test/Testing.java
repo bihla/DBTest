@@ -23,13 +23,13 @@ public class Testing {
 		ap.importPlan();
 		HibernateUtil.currentSession().flush();
 		AccountPlan ap2 = AccountPlan.getByAccountNumber("1010");
-		System.out.println("AccountPlan:n:"+ap2.getAccountNumber());
-		System.out.println("AccountPlan:d:"+ap2.getDescription());
-		
+		System.out.println("AccountPlan:n:" + ap2.getAccountNumber());
+		System.out.println("AccountPlan:d:" + ap2.getDescription());
+
 		HibernateUtil.currentSession().getTransaction().commit();
-		
+
 		HibernateUtil.currentSession().beginTransaction();
-		
+
 		if (true) {
 			AccountVerification av1 = new AccountVerification("Verifikat #1");
 			av1.addAccount("1010", 100L);
@@ -43,7 +43,7 @@ public class Testing {
 			av2.addAccount("3015", -40L);
 			HibernateUtil.currentSession().save(av2);
 
-			for (int j = 100; j < 1000; j++) {
+			for (int j = 1000; j < 2000; j++) {
 				AccountVerification avX = new AccountVerification("Verifikat #" + j);
 				avX.addAccount("1910", 100L * j);
 				avX.addAccount("3010", -75L * j);
@@ -87,7 +87,7 @@ public class Testing {
 		}
 		HibernateUtil.currentSession().getTransaction().commit();
 
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= 50; i++) {
 			new Thread(new StoreOneHundred(i)).start();
 		}
 

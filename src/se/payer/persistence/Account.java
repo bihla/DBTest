@@ -20,11 +20,11 @@ public class Account extends PersistenceBase {
 	@Column(name = "Description", length = 255)
 	private String description;
 
-	@Column(name = "AmountDebit")
-	private Long amountDebit;
+	@Column(name = "Debit")
+	private Long debitAmount;
 
-	@Column(name = "AmountCredit")
-	private Long amountCredit;
+	@Column(name = "Credit")
+	private Long creditAmount;
 
 	public Account() {
 		super();
@@ -38,9 +38,9 @@ public class Account extends PersistenceBase {
 	public Account(AccountVerification verification, String account, Long amount, String description) {
 		this(verification);
 		if (amount > 0)
-			this.amountDebit = amount;
+			this.debitAmount = amount;
 		if (amount < 0)
-			this.amountCredit = amount;
+			this.creditAmount = amount;
 		this.accountNumber = account;
 		this.description = description;
 	}
@@ -70,19 +70,19 @@ public class Account extends PersistenceBase {
 	}
 
 	public Long getAmountDebit() {
-		return amountDebit;
+		return debitAmount;
 	}
 
 	public void setAmountDebit(Long amountDebit) {
-		this.amountDebit = amountDebit;
+		this.debitAmount = amountDebit;
 	}
 
 	public Long getAmountCredit() {
-		return amountCredit;
+		return creditAmount;
 	}
 
 	public void setAmountCredit(Long amountCredit) {
-		this.amountCredit = amountCredit;
+		this.creditAmount = amountCredit;
 	}
 
 	// Getters and Setters
