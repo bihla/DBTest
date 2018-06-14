@@ -1,0 +1,41 @@
+
+
+============================================
+ live# https://appapi2.bankid.com/rp/v5
+ test# https://appapi2.test.bankid.com/rp/v5
+============================================
+
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"username":"xyz","password":"xyz"}' \
+  https://appapi2.test.bankid.com/rp/v5
+  
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"personalNumber":"196605057253","endUserIp":"94.140.57.181"}' \
+  --cert FPTestcert2.p12:qwerty123 \
+  --cacert bankid_CA_test.cer \
+  https://appapi2.test.bankid.com/rp/v5/auth
+  
+====>
+
+{"orderRef":"9b5b49c7-af8e-4648-b949-36fcc195f212","autoStartToken":"26a2eeb0-0c2b-43f9-a605-40466a9c6e15"}
+
+bankid:///?autostarttoken=26a2eeb0-0c2b-43f9-a605-40466a9c6e15&redirect=https://secure.payer.se
+bankid:///?autostarttoken=512d6b1f-5031-4d55-987b-4e61b86719cb&redirect=https://secure.payer.se
+
+https://app.test.bankid.com/?autostarttoken=512d6b1f-5031-4d55-987b-4e61b86719cb&redirect=https://secure.payer.se
+https://appapi2.test.bankid.com/?autostarttoken=512d6b1f-5031-4d55-987b-4e61b86719cb&redirect=https://secure.payer.se
+
+BankID production environment
+Old IP address	New IP address	FQDN (Fully Qualified Domain Name)
+194.242.109.201	185.198.4.13	APPAPI.BANKID.COM
+194.242.109.218	185.198.4.26	APPAPI2.BANKID.COM
+194.242.109.207	185.198.4.18	CAVAINTERNAL.BANKID.COM
+194.242.109.208	185.198.4.19	CAVANOTIFICATION.BANKID.COM
+BankID test environment
+Old IP address	New IP address	FQDN (Fully Qualified Domain Name)
+194.242.109.182	185.198.6.20	APPAPI.TEST.BANKID.COM
+194.242.109.188	185.198.6.24	APPAPI2.TEST.BANKID.COM
+194.242.109.177	185.198.6.16	CAVAINTERNAL.TEST.BANKID.COM
+194.242.109.169	185.198.6.14	CAVANOTIFICATION.TEST.BANKID.COM
