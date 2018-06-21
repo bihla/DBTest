@@ -12,44 +12,56 @@ import se.payer.persistence.PaymentDetail;
 
 public class Testing {
 
-	private HibernateUtil hibernateUtil = new HibernateUtil();
+	// private HibernateUtil hibernateUtil = new HibernateUtil();
 
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger(Testing.class);
 
 		// TODO Auto-generated method stub
-		HibernateUtil.currentSession().beginTransaction();
-		AccountPlan ap = new AccountPlan();
-		ap.importPlan();
-		HibernateUtil.currentSession().flush();
-		AccountPlan ap2 = AccountPlan.getByAccountNumber("1010");
-		System.out.println("AccountPlan:n:" + ap2.getAccountNumber());
-		System.out.println("AccountPlan:d:" + ap2.getDescription());
+		if (false) {
+			HibernateUtil.currentSession().beginTransaction();
 
-		HibernateUtil.currentSession().getTransaction().commit();
-
+			AccountPlan ap = new AccountPlan();
+			ap.importPlan();
+			HibernateUtil.currentSession().flush();
+			AccountPlan ap2 = AccountPlan.getByAccountNumber("1010");
+			System.out.println("AccountPlan:n:" + ap2.getAccountNumber());
+			System.out.println("AccountPlan:d:" + ap2.getDescription());
+			
+			HibernateUtil.currentSession().getTransaction().commit();
+		}
 		HibernateUtil.currentSession().beginTransaction();
 
 		if (true) {
+
 			AccountVerification av1 = new AccountVerification("Verifikat #1");
-			av1.addAccount("1010", 100L);
-			av1.addAccount("2010", -80L);
-			av1.addAccount("3011", -20L);
+			av1.addAccount("1010", 100.0);
+			av1.addAccount("2010", -80.0);
+			av1.addAccount("3011", -20.0);
 			HibernateUtil.currentSession().save(av1);
 
 			AccountVerification av2 = new AccountVerification("Verifikat #2");
-			av2.addAccount("1010", 200L);
-			av2.addAccount("2010", -160L);
-			av2.addAccount("3015", -40L);
+			av2.addAccount("1010", 200.0);
+			av2.addAccount("2010", -160.0);
+			av2.addAccount("3011", -40.0);
 			HibernateUtil.currentSession().save(av2);
 
 			for (int j = 1000; j < 2000; j++) {
+
 				AccountVerification avX = new AccountVerification("Verifikat #" + j);
-				avX.addAccount("1910", 100L * j);
-				avX.addAccount("3010", -75L * j);
-				avX.addAccount("2611", -25L * j);
+				avX.addAccount("1910", 150.0 * j);
+				avX.addAccount("3041", -80.0 * j);
+				avX.addAccount("3042", -20.0 * j);
+				avX.addAccount("3043", -40.0 * j);
+				avX.addAccount("1911", 50.0 * j);
+				avX.addAccount("3044", -30.0 * j);
+				avX.addAccount("2611", -20.0 * j);
+				avX.addAccount("2612", -10.0 * j);
 				HibernateUtil.currentSession().save(avX);
-				HibernateUtil.currentSession().flush();
+				if (j % 100 == 0) {
+					System.out.println("AccountVerification:" + j);
+					HibernateUtil.currentSession().flush();
+				}
 			}
 		}
 

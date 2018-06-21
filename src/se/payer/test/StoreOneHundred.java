@@ -93,9 +93,9 @@ public class StoreOneHundred implements Runnable {
 			}
 			{
 				AccountVerification avX = new AccountVerification("Verifikat #" + i);
-				avX.addAccount("1910", 100L * i / 1000L);
-				avX.addAccount("3010", -75L * i / 1000L);
-				avX.addAccount("2611", -25L * i / 1000L);
+				avX.addAccount("1910", 100.0 * i / 100L);
+				avX.addAccount("3010", -75.0 * i / 100L);
+				avX.addAccount("2611", -25.0 * i / 100L);
 				HibernateUtil.currentSession().save(avX);
 			}
 		}
