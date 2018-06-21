@@ -1,5 +1,7 @@
 <?php
 // {"personalNumber":"196605057253","endUserIp":"94.140.57.181"}
+/// {"orderRef":"42921963-e912-4bfc-9ba8-2a876ba46cf1","autoStartToken":"bf5c055c-945d-45c2-84d8-be028e33dad8"}
+/// {"errorCode":"alreadyInProgress","details":"Order already in progress for pno"}
 $data = array(
     "personalNumber" => "196605057253",
     "endUserIp" => "94.140.57.181"
@@ -33,6 +35,7 @@ if (curl_errno($handle)) {
 }
 curl_close($handle);
 $json = json_decode($result);
+echo ">>$result<<";
 echo "\n errorCode=".$json->errorCode;
 echo "\n details=".$json->details;
 echo "\n autoStartToken=".$json->autoStartToken;
