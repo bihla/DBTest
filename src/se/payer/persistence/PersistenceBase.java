@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
 
 @MappedSuperclass
 public class PersistenceBase implements Serializable {
-
+	protected static final transient Logger logger = Logger.getLogger(PersistenceBase.class);
 	private static final long serialVersionUID = 7446798237474L;
 
 	@Id

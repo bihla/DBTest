@@ -30,10 +30,17 @@ public class AccountVerification extends PersistenceBase {
 		Description = description;
 	}
 
-	public void addAccount(String accountNumber, Long amount) {
+	public void addAccount2(String accountNumber, Double amount) {
 		AccountPlan ap = AccountPlan.getByAccountNumber(accountNumber);
-		String description = (ap == null ? "(unknown account:"+accountNumber+")" : ap.getDescription());
+		String description = (ap == null ? "(unknown account:" + accountNumber + ")" : ap.getDescription());
 		accounts.add(new Account(this, accountNumber, amount, description));
+	}
+
+	public void addAccount(String accountNumber, Double amount) {
+		AccountPlan ap = AccountPlan.getByAccountNumber(accountNumber);
+		String description = (ap == null ? "(unknown account:" + accountNumber + ")" : ap.getDescription());
+		accounts.add(amount >= 0 ? new AccountDebit(this, accountNumber, amount, description)
+				: new AccountCredit(this, accountNumber, amount, description));
 	}
 
 }

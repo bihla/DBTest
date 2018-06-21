@@ -6,8 +6,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Account", indexes = {
 		@Index(name = "index_AccountNumber_uniq", columnList = "Id,AccountNumber", unique = true),
-		@Index(name = "index_AccountNumber_fast", columnList = "AccountNumber", unique = false)})
-
+		@Index(name = "index_AccountNumber_fast", columnList = "AccountNumber", unique = false) })
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "Type")
 public class Account extends PersistenceBase {
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -20,11 +21,11 @@ public class Account extends PersistenceBase {
 	@Column(name = "Description", length = 255)
 	private String description;
 
-	@Column(name = "Debit")
-	private Long debitAmount;
+	@Column(name = "Debit", precision=2)
+	private Double debitAmount;
 
-	@Column(name = "Credit")
-	private Long creditAmount;
+	@Column(name = "Credit", precision=2)
+	private Double creditAmount;
 
 	public Account() {
 		super();
@@ -35,7 +36,7 @@ public class Account extends PersistenceBase {
 		this.accountVerification = accountVerification;
 	}
 
-	public Account(AccountVerification verification, String account, Long amount, String description) {
+	public Account(AccountVerification verification, String account, Double amount, String description) {
 		this(verification);
 		if (amount > 0)
 			this.debitAmount = amount;
@@ -69,22 +70,22 @@ public class Account extends PersistenceBase {
 		this.description = description;
 	}
 
-	public Long getAmountDebit() {
+	public Double getAmountDebit() {
 		return debitAmount;
 	}
 
-	public void setAmountDebit(Long amountDebit) {
+	public void setAmountDebit(Double amountDebit) {
 		this.debitAmount = amountDebit;
 	}
 
-	public Long getAmountCredit() {
+	public Double getAmountCredit() {
 		return creditAmount;
 	}
 
-	public void setAmountCredit(Long amountCredit) {
+	public void setAmountCredit(Double amountCredit) {
 		this.creditAmount = amountCredit;
 	}
 
 	// Getters and Setters
-	
+
 }

@@ -4,6 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "OrderToken", indexes = {
 		@Index(name = "index_uniq_tokenIdentifier", columnList = "TokenIdentifier", unique = true),
 		@Index(name = "index_createDate", columnList = "CreateDate", unique = false),

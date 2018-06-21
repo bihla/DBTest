@@ -35,14 +35,14 @@ public class PaymentDetail extends PersistenceBase {
 	@Column(name = "Data", length = 128)
 	private String data;
 
-	@Column(name = "RequestedAmount", length = 128)
+	@Column(name = "RequestedAmount")
 	private Double requestedAmount = 0.0;
 
-	@Column(name = "Amount", length = 128)
+	@Column(name = "Amount")
 	private Double amount = 0.0;
 
 	public enum Status {
-		UNSET, GENERIC_ERROR, FAILED, OK
+		UNSET, PENDING, GENERIC_ERROR, FAILED, OK
 	}
 
 	@Enumerated(EnumType.STRING)

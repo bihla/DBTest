@@ -15,6 +15,8 @@ public class HibernateUtil {
 			ac.addAnnotatedClass(AccountPlan.class);
 			ac.addAnnotatedClass(AccountVerification.class);
 			ac.addAnnotatedClass(Account.class);
+			ac.addAnnotatedClass(AccountDebit.class);
+			ac.addAnnotatedClass(AccountCredit.class);
 			
 			ac.addAnnotatedClass(Article.class);
 			ac.addAnnotatedClass(ArticleAgreement.class);
@@ -23,6 +25,7 @@ public class HibernateUtil {
 			ac.addAnnotatedClass(PaymentType2.class);
 			ac.addAnnotatedClass(Payment.class);
 			ac.addAnnotatedClass(PaymentDetail.class);
+			ac.addAnnotatedClass(PaymentLog.class);
 			
 			ac.addAnnotatedClass(OrderToken.class);
 			ac.addAnnotatedClass(OrderTokenKeyValue.class);
