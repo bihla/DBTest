@@ -3,6 +3,7 @@ package se.payer.persistence;
 import java.util.*;
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "PaymentLog")
 public class PaymentLog extends PersistenceBase {
