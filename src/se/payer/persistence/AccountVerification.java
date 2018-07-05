@@ -36,7 +36,7 @@ public class AccountVerification extends PersistenceBase {
 	}
 
 	public long commit() throws Exception {
-		logger.debug("AccountVerification::commit...");
+		
 		long amount = 0;
 		long debit = 0;
 		long credit = 0;
