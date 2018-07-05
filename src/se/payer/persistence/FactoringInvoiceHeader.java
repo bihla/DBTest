@@ -747,7 +747,7 @@ public class FactoringInvoiceHeader implements Serializable {
 		if (factoringInvoiceDetail != null && fid != null) {
 			fid.setFactoringInvoiceHeader(this);
 			factoringInvoiceDetail.add(fid);
-			return (Long) HibernateUtil.currentSession().save(fid);
+			return (Long) HibernateUtilTarget.currentSession().save(fid);
 		}
 		return null;
 	}
@@ -796,7 +796,7 @@ public class FactoringInvoiceHeader implements Serializable {
 	@Transient
 	public static FactoringInvoiceHeader getFactoringInvoiceHeaderByInvoiceNumber(String invoiceNumber) {
 
-		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtil.currentSession()
+		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtilTarget.currentSession()
 				.createQuery("FROM FactoringInvoiceHeader WHERE InvoiceNumber=:ino").setParameter("ino", invoiceNumber)
 				.uniqueResult();
 		return invoiceHeader;
@@ -806,7 +806,7 @@ public class FactoringInvoiceHeader implements Serializable {
 	public static FactoringInvoiceHeader getFactoringInvoiceHeaderByInvoiceNumberAndWebsite(String invoiceNumber,
 			String websiteId) {
 
-		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtil.currentSession()
+		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtilTarget.currentSession()
 				.createQuery("FROM FactoringInvoiceHeader WHERE InvoiceNumber=:ino AND WebsiteId=:wid")
 				.setParameter("ino", invoiceNumber).setParameter("wid", websiteId).uniqueResult();
 		return invoiceHeader;
@@ -815,7 +815,7 @@ public class FactoringInvoiceHeader implements Serializable {
 	@Transient
 	public static FactoringInvoiceHeader getFactoringInvoiceHeaderByChargeLogId(long chargeLogId) {
 
-		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtil.currentSession()
+		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtilTarget.currentSession()
 				.createQuery("FROM FactoringInvoiceHeader WHERE ChargeLogId=:clog").setParameter("clog", chargeLogId)
 				.uniqueResult();
 		return invoiceHeader;
@@ -824,7 +824,7 @@ public class FactoringInvoiceHeader implements Serializable {
 	@Transient
 	public static FactoringInvoiceHeader getFactoringInvoiceHeaderByOrderId(long orderId) {
 
-		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtil.currentSession()
+		FactoringInvoiceHeader invoiceHeader = (FactoringInvoiceHeader) HibernateUtilTarget.currentSession()
 				.createQuery("FROM FactoringInvoiceHeader WHERE DirectOrderHeaderId=:iod").setParameter("iod", orderId)
 				.uniqueResult();
 		return invoiceHeader;
@@ -923,10 +923,10 @@ public class FactoringInvoiceHeader implements Serializable {
 
 	@Transient
 	public static void delete(String invoiceNumber) {
-		HibernateUtil.currentSession()
+		HibernateUtilTarget.currentSession()
 				.createQuery("DELETE FROM FactoringInvoiceDetail WHERE FactoringInvoiceHeaderId=:id")
 				.setParameter("id", invoiceNumber).executeUpdate();
-		HibernateUtil.currentSession().createQuery("DELETE FROM FactoringInvoiceHeader WHERE InvoiceNumber=:id")
+		HibernateUtilTarget.currentSession().createQuery("DELETE FROM FactoringInvoiceHeader WHERE InvoiceNumber=:id")
 				.setParameter("id", invoiceNumber).executeUpdate();
 	}
 
@@ -934,7 +934,7 @@ public class FactoringInvoiceHeader implements Serializable {
 	@SuppressWarnings("unchecked")
 	public static List<FactoringInvoiceHeader> getByWebsiteId(String websiteId) {
 
-		List<FactoringInvoiceHeader> fihs = (List<FactoringInvoiceHeader>) HibernateUtil.currentSession()
+		List<FactoringInvoiceHeader> fihs = (List<FactoringInvoiceHeader>) HibernateUtilTarget.currentSession()
 				.createQuery("FROM FactoringInvoiceHeader WHERE WebsiteId=:wid "/* "# AND Status <> 'FAKTURERAD'" */)
 				.setParameter("wid", websiteId).list();
 		return fihs;

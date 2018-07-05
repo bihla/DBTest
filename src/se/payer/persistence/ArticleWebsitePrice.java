@@ -152,7 +152,7 @@ public class ArticleWebsitePrice extends PersistenceBase {
 
 	public static ArticleWebsitePrice getArticle(String websiteId, String articleNo) {
 
-		ArticleWebsitePrice article = (ArticleWebsitePrice) HibernateUtil.currentSession()
+		ArticleWebsitePrice article = (ArticleWebsitePrice) HibernateUtilTarget.currentSession()
 				.createQuery("FROM Article WHERE WebsiteId = :wid and ArticleNo = :anumber")
 				.setParameter("wid", websiteId).setParameter("anumber", articleNo).uniqueResult();
 

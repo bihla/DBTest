@@ -70,7 +70,7 @@ public class ChargeLogDebitType extends PersistenceBase {
 
 	@Transient
 	public static ChargeLogDebitType getChargeLogDebitType(long id) throws NoSuchChargeLogDebitTypeException {
-		ChargeLogDebitType chargeLogDebitType = (ChargeLogDebitType) HibernateUtil.currentSession().get(ChargeLogDebitType.class, new Long(id));
+		ChargeLogDebitType chargeLogDebitType = (ChargeLogDebitType) HibernateUtilTarget.currentSession().get(ChargeLogDebitType.class, new Long(id));
 		if (chargeLogDebitType == null) {
 			throw new NoSuchChargeLogDebitTypeException("ChargeLogDebitType[" + id + "] not found.");
 		}
@@ -79,19 +79,19 @@ public class ChargeLogDebitType extends PersistenceBase {
 
 	@Transient
 	public static ChargeLogDebitType getChargeLogDebitType_NoException(long id) {
-		ChargeLogDebitType chargeLogDebitType = (ChargeLogDebitType) HibernateUtil.currentSession().get(ChargeLogDebitType.class, new Long(id));
+		ChargeLogDebitType chargeLogDebitType = (ChargeLogDebitType) HibernateUtilTarget.currentSession().get(ChargeLogDebitType.class, new Long(id));
 		return chargeLogDebitType;
 	}
 
 	@Transient
 	public static ChargeLogDebitType getChargeLogDebitTypeByUniqName(String uniqName) {
-		ChargeLogDebitType chargeLogDebitType = (ChargeLogDebitType) HibernateUtil.currentSession().createQuery("from ChargeLogDebitType where UniqName=:id").setString("id", uniqName).uniqueResult();
+		ChargeLogDebitType chargeLogDebitType = (ChargeLogDebitType) HibernateUtilTarget.currentSession().createQuery("from ChargeLogDebitType where UniqName=:id").setString("id", uniqName).uniqueResult();
 		return chargeLogDebitType;
 	}
 
 	@Transient
 	public static String getDisplayName_no_TX_nonono(int debttype) {
-		ChargeLogDebitType cdtype = (ChargeLogDebitType) HibernateUtil.currentSession().createQuery("from ChargeLogDebitType where Id=:id").setLong("id", debttype).uniqueResult();
+		ChargeLogDebitType cdtype = (ChargeLogDebitType) HibernateUtilTarget.currentSession().createQuery("from ChargeLogDebitType where Id=:id").setLong("id", debttype).uniqueResult();
 		return cdtype.getDisplayType();
 	}
 
@@ -217,9 +217,9 @@ public class ChargeLogDebitType extends PersistenceBase {
 				+", payoutTypeStr"+payoutTypeStr+"=>"+payoutType
 				+", id="+Id);
 		
-		ChargeLogDebitType cldt = (ChargeLogDebitType) HibernateUtil.currentSession().get(ChargeLogDebitType.class, new Long(Id));
+		ChargeLogDebitType cldt = (ChargeLogDebitType) HibernateUtilTarget.currentSession().get(ChargeLogDebitType.class, new Long(Id));
 		if (cldt!=null)
-			logger.debug(((ChargeLogDebitType) HibernateUtil.currentSession().get(ChargeLogDebitType.class, new Long(Id))).toString());
+			logger.debug(((ChargeLogDebitType) HibernateUtilTarget.currentSession().get(ChargeLogDebitType.class, new Long(Id))).toString());
 		else
 			logger.warn("ChargeLogDebitType("+Id+") is not found in database.");
 		
@@ -227,7 +227,7 @@ public class ChargeLogDebitType extends PersistenceBase {
 	}
 	
 	public ChargeLogDebitType getByCardStr(String pspBrandStr, String paymentTypeStr, String cardBrandStr, String payoutTypeStr) {
-		return (ChargeLogDebitType) HibernateUtil.currentSession().get(ChargeLogDebitType.class, new Long(ChargeLogDebitType.cardStrToId(pspBrandStr, paymentTypeStr, cardBrandStr, payoutTypeStr)));
+		return (ChargeLogDebitType) HibernateUtilTarget.currentSession().get(ChargeLogDebitType.class, new Long(ChargeLogDebitType.cardStrToId(pspBrandStr, paymentTypeStr, cardBrandStr, payoutTypeStr)));
 	}
 
 	public String toString() {

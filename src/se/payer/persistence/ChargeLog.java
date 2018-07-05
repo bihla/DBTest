@@ -691,7 +691,7 @@ public class ChargeLog extends PersistenceBase {
 
 	@Transient
 	public static ChargeLog getChargeLog(long chargeLogId) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession().get(ChargeLog.class, new Long(chargeLogId));
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession().get(ChargeLog.class, new Long(chargeLogId));
 		if (chargeLog == null) {
 			throw new NoSuchChargeLogException("ChargeLog[" + chargeLogId + "] not found.");
 		}
@@ -701,7 +701,7 @@ public class ChargeLog extends PersistenceBase {
 	@Transient
 	public static ArrayList<ChargeLog> getChargeLogs(String websiteId, Date fomDate, Date tomDate, boolean isTest) {
 
-		ArrayList<ChargeLog> chargeLogs = (ArrayList<ChargeLog>) HibernateUtil.currentSession()
+		ArrayList<ChargeLog> chargeLogs = (ArrayList<ChargeLog>) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE WebSiteId=:wid AND TimeStamp BETWEEN :fom AND :tom")
 				.setString("wid", websiteId)
 				.setLong("fom", fomDate.getTime()/1000)
@@ -713,13 +713,13 @@ public class ChargeLog extends PersistenceBase {
 
 	@Transient
 	public static ChargeLog getChargeLog_NoExeption(long chargeLogId) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession().get(ChargeLog.class, new Long(chargeLogId));
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession().get(ChargeLog.class, new Long(chargeLogId));
 		return chargeLog;
 	}
 
 	@Transient
 	public static ChargeLog getChargeLogByChargeLogIdAndWebsite_NoException(Long chargeLogId, String websiteId) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE Id=:id AND WebSiteId=:wid")
 				.setParameter("id", chargeLogId)
 				.setParameter("wid", websiteId)
@@ -729,7 +729,7 @@ public class ChargeLog extends PersistenceBase {
 	
 	@Transient
 	public static ChargeLog getChargeLogByChargeLogIdAndWebsite(Long chargeLogId, String websiteId) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE Id=:id AND WebSiteId=:wid")
 				.setParameter("id", chargeLogId)
 				.setParameter("wid", websiteId)
@@ -746,7 +746,7 @@ public class ChargeLog extends PersistenceBase {
 		final Logger logger = Logger.getLogger("ChargeLog");
 		logger.debug("ChargeLog::getChargeLogByWebsiteIdAndSessionId_NOT_DEBITED_YET(websiteId:'" + websiteId + "'sessionId:'" + sessionId + ")");
 
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE WebSiteId=:wid AND KeyIndex=:id AND IsDebited=0")
 				.setParameter("wid", websiteId)
 				.setParameter("id", sessionId)
@@ -760,7 +760,7 @@ public class ChargeLog extends PersistenceBase {
 		final Logger logger = Logger.getLogger("ChargeLog");
 		logger.debug("ChargeLog::getChargeLogBySessionIdAndType(sessionId:'" + sessionId + "', type:" + type + ")");
 
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE KeyIndex=:id AND DebitType=:type")
 				.setParameter("id", sessionId)
 				.setParameter("type", type)
@@ -775,7 +775,7 @@ public class ChargeLog extends PersistenceBase {
 
 		int testAsInt = isTest ? 1 : 0;
 
-		List<ChargeLog> chargeLogs = (List<ChargeLog>) HibernateUtil.currentSession().createQuery("FROM ChargeLog WHERE WebsiteId=:wid AND TestDebit=:istest AND CreditRefId <> null ORDER BY Id DESC").setParameter("wid", websiteId).setParameter("istest", testAsInt).setMaxResults(100).list();
+		List<ChargeLog> chargeLogs = (List<ChargeLog>) HibernateUtilTarget.currentSession().createQuery("FROM ChargeLog WHERE WebsiteId=:wid AND TestDebit=:istest AND CreditRefId <> null ORDER BY Id DESC").setParameter("wid", websiteId).setParameter("istest", testAsInt).setMaxResults(100).list();
 		return chargeLogs;
 	}
 
@@ -786,14 +786,14 @@ public class ChargeLog extends PersistenceBase {
 
 		int testAsInt = isTest ? 1 : 0;
 
-		List<ChargeLog> chargeLogs = (List<ChargeLog>) HibernateUtil.currentSession().createQuery("FROM ChargeLog WHERE Id<=:maxid AND TestDebit=:istest AND CreditRefId <> null ORDER BY Id DESC").setParameter("maxid", maxId).setParameter("istest", testAsInt).setMaxResults(100).list();
+		List<ChargeLog> chargeLogs = (List<ChargeLog>) HibernateUtilTarget.currentSession().createQuery("FROM ChargeLog WHERE Id<=:maxid AND TestDebit=:istest AND CreditRefId <> null ORDER BY Id DESC").setParameter("maxid", maxId).setParameter("istest", testAsInt).setMaxResults(100).list();
 		return chargeLogs;
 	}
 
 	@Transient
 	public static void purgeByWebsiteId(String websiteId) {
 		logger.debug("purgeByWebsiteId(String websiteId="+websiteId+")...");
-		HibernateUtil.currentSession()
+		HibernateUtilTarget.currentSession()
 		.createQuery("DELETE ChargeLog WHERE WebsiteId = :wid")
 		.setParameter("wid", websiteId)
 		.executeUpdate();
@@ -802,7 +802,7 @@ public class ChargeLog extends PersistenceBase {
 
 	@Transient
 	public static ChargeLog getChargeLogBySessionIdAndTypeAndLimitNotRefund(String sessionid, int type, Long limit) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE KeyIndex=:id AND DebitType=:type AND Id BETWEEN :m1 AND :m2 AND CreditRefId IS NULL")
 				.setParameter("id", sessionid)
 				.setParameter("type", type)
@@ -814,7 +814,7 @@ public class ChargeLog extends PersistenceBase {
 
 	@Transient
 	public static ChargeLog getChargeLogByParentRefIdAndType(Long parentRefId, int type) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE ParentRefId=:prid AND DebitType=:type")
 				.setParameter("prid", parentRefId)
 				.setParameter("type", type)
@@ -824,7 +824,7 @@ public class ChargeLog extends PersistenceBase {
 
 	@Transient
 	public static ChargeLog getChargeLogByParentRefIdAndTypeNotRefund(Long parentRefId, int type) {
-		ChargeLog chargeLog = (ChargeLog) HibernateUtil.currentSession()
+		ChargeLog chargeLog = (ChargeLog) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE ParentRefId=:prid AND DebitType=:type AND CreditRefId IS NULL")
 				.setParameter("prid", parentRefId)
 				.setParameter("type", type)
@@ -834,7 +834,7 @@ public class ChargeLog extends PersistenceBase {
 
 	@Transient
 	public static List<ChargeLog> getLastNdaysByWebsiteId(String websiteId, int nDays, int maxResultRows) {
-		return (List<ChargeLog>) HibernateUtil.currentSession()
+		return (List<ChargeLog>) HibernateUtilTarget.currentSession()
 				.createQuery("FROM ChargeLog WHERE WebSiteId=:wid AND TimeStamp > (UNIX_TIMESTAMP()-3600*24*"+nDays+") ORDER BY Id DESC")
 				.setParameter("wid", websiteId)
 				.setMaxResults(maxResultRows)
@@ -859,7 +859,7 @@ public class ChargeLog extends PersistenceBase {
 
 			newClg.setSessionId(getSessionId());
 
-			HibernateUtil.currentSession().saveOrUpdate(newClg);
+			HibernateUtilTarget.currentSession().saveOrUpdate(newClg);
 			long id = newClg.getId();
 
 			/* Update the Reserve ChargeLog to be hidden */
@@ -879,7 +879,7 @@ public class ChargeLog extends PersistenceBase {
 			setDistToCustomer(0);
 			setDistToPayRead(0);
 
-			HibernateUtil.currentSession().saveOrUpdate(this);
+			HibernateUtilTarget.currentSession().saveOrUpdate(this);
 
 			logger.debug("New ChargeLog was created and stored:" + id);
 			return id;

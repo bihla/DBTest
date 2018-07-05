@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateUtil {
+public class HibernateUtilTarget {
 
 	private static final SessionFactory sessionFactory;
 
@@ -29,11 +29,11 @@ public class HibernateUtil {
 			
 			ac.addAnnotatedClass(OrderToken.class);
 			ac.addAnnotatedClass(OrderTokenKeyValue.class);
-			
-			ac.addAnnotatedClass(Website.class);
 
-			ac.addResource("hibernate.cfg.xml");
-			sessionFactory = ac.configure().buildSessionFactory();
+			ac.addAnnotatedClass(Website.class);
+			
+//			ac.addResource("hibernate-target.cfg.xml");
+			sessionFactory = ac.configure("hibernate-target.cfg.xml").buildSessionFactory();
 
 		} catch (Throwable ex) {
 			System.err.println("Error initializing Hibernate." + ex.getMessage());

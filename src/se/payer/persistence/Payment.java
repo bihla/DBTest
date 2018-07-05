@@ -40,6 +40,16 @@ public class Payment extends PersistenceBase {
 	public Payment() {
 		super();
 	}
+	public void settle(String referenceId, String data, Double amount) {
+		PaymentDetail pd = new PaymentDetail(this, referenceId, amount);
+		pd.settle(data);
+		payments.add(pd);
+	}
+	public void refund(String referenceId, String data, Double amount) {
+		PaymentDetail pd = new PaymentDetail(this, referenceId, amount);
+		pd.refund(data, amount);
+		payments.add(pd);
+	}
 
 	public Payment(PaymentType paymentType, String referenceId, Double requestedAmount) {
 		super();

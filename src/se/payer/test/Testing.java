@@ -2,35 +2,30 @@ package se.payer.test;
 
 import org.apache.log4j.Logger;
 
-import se.payer.persistence.AccountPlan;
-import se.payer.persistence.AccountVerification;
-import se.payer.persistence.Article;
-import se.payer.persistence.HibernateUtil;
-import se.payer.persistence.OrderToken;
-import se.payer.persistence.Payment;
-import se.payer.persistence.PaymentDetail;
+import se.payer.persistence.*;
 
 public class Testing {
 
-	// private HibernateUtil hibernateUtil = new HibernateUtil();
+	private HibernateUtilTarget hibernateUtilTarget = new HibernateUtilTarget();
+	private HibernateUtilSource hibernateUtilSource = new HibernateUtilSource();
 
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger(Testing.class);
 
 		// TODO Auto-generated method stub
-		if (false) {
-			HibernateUtil.currentSession().beginTransaction();
+		if (true) {
+			HibernateUtilTarget.currentSession().beginTransaction();
 
 			AccountPlan ap = new AccountPlan();
 			ap.importPlan();
-			HibernateUtil.currentSession().flush();
+			HibernateUtilTarget.currentSession().flush();
 			AccountPlan ap2 = AccountPlan.getByAccountNumber("1010");
 			System.out.println("AccountPlan:n:" + ap2.getAccountNumber());
 			System.out.println("AccountPlan:d:" + ap2.getDescription());
-			
-			HibernateUtil.currentSession().getTransaction().commit();
+
+			HibernateUtilTarget.currentSession().getTransaction().commit();
 		}
-		HibernateUtil.currentSession().beginTransaction();
+		HibernateUtilTarget.currentSession().beginTransaction();
 
 		if (true) {
 
@@ -38,15 +33,26 @@ public class Testing {
 			av1.addAccount("1010", 100.0);
 			av1.addAccount("2010", -80.0);
 			av1.addAccount("3011", -20.0);
-			HibernateUtil.currentSession().save(av1);
+			HibernateUtilTarget.currentSession().save(av1);
 
 			AccountVerification av2 = new AccountVerification("Verifikat #2");
 			av2.addAccount("1010", 200.0);
 			av2.addAccount("2010", -160.0);
 			av2.addAccount("3011", -40.0);
-			HibernateUtil.currentSession().save(av2);
+			HibernateUtilTarget.currentSession().save(av2);
 
-			for (int j = 1000; j < 2000; j++) {
+			if (true) {
+				PaymentLog pl1 = new PaymentLog(100.0, "SEK");
+				PaymentLog pl2 = new PaymentLog(200.0, "SEK");
+				PaymentLog pl3 = new PaymentLog(300.0, "SEK");
+				HibernateUtilTarget.currentSession().save(pl1);
+				HibernateUtilTarget.currentSession().save(pl2);
+				HibernateUtilTarget.currentSession().save(pl3);
+
+				HibernateUtilTarget.currentSession().flush();
+			}
+
+			for (int j = 1000; j < 1050; j++) {
 
 				AccountVerification avX = new AccountVerification("Verifikat #" + j);
 				avX.addAccount("1910", 150.0 * j);
@@ -57,10 +63,10 @@ public class Testing {
 				avX.addAccount("3044", -30.0 * j);
 				avX.addAccount("2611", -20.0 * j);
 				avX.addAccount("2612", -10.0 * j);
-				HibernateUtil.currentSession().save(avX);
-				if (j % 100 == 0) {
+				HibernateUtilTarget.currentSession().save(avX);
+				if (j % 10 == 0) {
 					System.out.println("AccountVerification:" + j);
-					HibernateUtil.currentSession().flush();
+					HibernateUtilTarget.currentSession().flush();
 				}
 			}
 		}
@@ -71,42 +77,30 @@ public class Testing {
 			a.setWebsiteId("PR_EXAMPLES");
 			a.setArticleNo(":" + i);
 			a.setArticleDescription("Test item " + i);
-			HibernateUtil.currentSession().save(a);
+			HibernateUtilTarget.currentSession().save(a);
 
-			Payment p = new Payment();
-			HibernateUtil.currentSession().save(p);
+			Payment pp1 = new Payment();
+			pp1.settle("referenceId", "data", 10.0);
+			HibernateUtilTarget.currentSession().save(pp1);
+
+			Payment pp2 = new Payment();
+			pp2.refund("referenceId", "data", 10.0);
+			HibernateUtilTarget.currentSession().save(pp2);
 
 			Payment p1 = new Payment(Payment.PaymentType.BANK, "1234567", 120.0);
 
-			HibernateUtil.currentSession().save(p1);
-
-			PaymentDetail pd1 = new PaymentDetail(p, "First one");
-			PaymentDetail pd2 = new PaymentDetail(p, "First second", 1.0);
-			PaymentDetail pd3 = new PaymentDetail(p, "First third", 2.10);
-			PaymentDetail pd4 = new PaymentDetail(p, "First fourth", 3.50);
-			PaymentDetail pd5 = new PaymentDetail(p, "First fifth", 4.99);
-
-			pd2.fake("2-12345");
-			pd3.fake(null);
-			pd4.fake("3-54321");
-
-			HibernateUtil.currentSession().save(pd1);
-			HibernateUtil.currentSession().save(pd2);
-			HibernateUtil.currentSession().save(pd3);
-			HibernateUtil.currentSession().save(pd4);
-			HibernateUtil.currentSession().save(pd5);
-
+			HibernateUtilTarget.currentSession().save(p1);
 		}
-		HibernateUtil.currentSession().getTransaction().commit();
+		HibernateUtilTarget.currentSession().getTransaction().commit();
 
 		for (int i = 1; i <= 50; i++) {
 			new Thread(new StoreOneHundred(i)).start();
 		}
 
-		HibernateUtil.currentSession().beginTransaction();
+		HibernateUtilTarget.currentSession().beginTransaction();
 		if (false) {
-			HibernateUtil.currentSession().beginTransaction();
-			OrderToken p1 = (OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 5L);
+			HibernateUtilTarget.currentSession().beginTransaction();
+			OrderToken p1 = (OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 5L);
 			logger.debug("# Description:" + p1.getDescription());
 			logger.debug("# +:" + p1.getMetaData("key-1"));
 			logger.debug("# +:" + p1.getMetaData("key-2"));
@@ -134,48 +128,48 @@ public class Testing {
 		}
 
 		if (false) {
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 1L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 2L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 3L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 4L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 1L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 2L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 3L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 4L));
 
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 6L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 7L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 8L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 9L));
-			HibernateUtil.currentSession()
-					.delete((OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 10L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 6L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 7L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 8L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 9L));
+			HibernateUtilTarget.currentSession()
+					.delete((OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 10L));
 		}
 
 		if (false) {
-			OrderToken p2 = (OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 6L);
+			OrderToken p2 = (OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 6L);
 			p2.deleteMetaData("key-1");
 			p2.deleteMetaData("key-2");
 			p2.deleteMetaData("key-3");
 
-			OrderToken p3 = (OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 5L);
+			OrderToken p3 = (OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 5L);
 			p3.deleteMetaData("key-2");
 
-			HibernateUtil.currentSession().delete(HibernateUtil.currentSession().get(OrderToken.class, 5L));
-			HibernateUtil.currentSession().delete(HibernateUtil.currentSession().get(OrderToken.class, 6L));
+			HibernateUtilTarget.currentSession().delete(HibernateUtilTarget.currentSession().get(OrderToken.class, 5L));
+			HibernateUtilTarget.currentSession().delete(HibernateUtilTarget.currentSession().get(OrderToken.class, 6L));
 
 		}
 		if (false) {
-			OrderToken p1 = (OrderToken) HibernateUtil.currentSession().get(OrderToken.class, 5L);
+			OrderToken p1 = (OrderToken) HibernateUtilTarget.currentSession().get(OrderToken.class, 5L);
 			p1.updateMetaData("key-3", "MMM (key-3)");
 			p1.updateMetaData("key-2", "MM (key-2)");
 			p1.updateMetaData("key-1", "M (key-1)");
-			HibernateUtil.currentSession().update(p1);
+			HibernateUtilTarget.currentSession().update(p1);
 		}
-		HibernateUtil.currentSession().getTransaction().commit();
+		HibernateUtilTarget.currentSession().getTransaction().commit();
 
 	}
 

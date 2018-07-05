@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "Type")
 public class Account extends PersistenceBase {
-
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "AccountVerificationId", nullable = false)
 	private AccountVerification accountVerification;
@@ -21,10 +20,13 @@ public class Account extends PersistenceBase {
 	@Column(name = "Description", length = 255)
 	private String description;
 
-	@Column(name = "Debit", precision=2)
+	@Column(name = "Amount", precision = 2)
+	Double amount;
+
+	@Column(name = "Debit", precision = 2)
 	private Double debitAmount;
 
-	@Column(name = "Credit", precision=2)
+	@Column(name = "Credit", precision = 2)
 	private Double creditAmount;
 
 	public Account() {
@@ -68,6 +70,14 @@ public class Account extends PersistenceBase {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	public Double getAmountDebit() {

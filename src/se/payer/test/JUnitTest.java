@@ -7,7 +7,7 @@ import org.junit.*;
 import se.payer.persistence.Article;
 import se.payer.persistence.ArticleAgreement;
 import se.payer.persistence.ArticleWebsitePrice;
-import se.payer.persistence.HibernateUtil;
+import se.payer.persistence.HibernateUtilTarget;
 import se.payer.persistence.OrderToken;
 import se.payer.persistence.Website;
 
@@ -31,14 +31,14 @@ public class JUnitTest {
 	@Before
 	public void runBeforeTestMethod() {
 		System.out.println("@Before - runBeforeTestMethod");
-		HibernateUtil.currentSession().beginTransaction();
+		HibernateUtilTarget.currentSession().beginTransaction();
 	}
 
 	// Should rename to @AfterTestMethod
 	@After
 	public void runAfterTestMethod() {
 		System.out.println("@After - runAfterTestMethod");
-		HibernateUtil.currentSession().getTransaction().commit();
+		HibernateUtilTarget.currentSession().getTransaction().commit();
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class JUnitTest {
 		a.setWebsiteId("PR_EXAMPLES");
 		a.setArticleNo(":" + i);
 		a.setArticleDescription("Test item " + i);
-		HibernateUtil.currentSession().save(a);
+		HibernateUtilTarget.currentSession().save(a);
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class JUnitTest {
 		ArticleAgreement aa = new ArticleAgreement();
 		aa.setWebsiteId("PR_EXAMPLES");
 		aa.setArticleNo(":" + i);
-		HibernateUtil.currentSession().save(aa);
+		HibernateUtilTarget.currentSession().save(aa);
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class JUnitTest {
 		awp.setDefaultUnit("st");
 		awp.setDefaultPeriodicity("once");
 		awp.setDefaultVat(0);
-		HibernateUtil.currentSession().save(awp);
+		HibernateUtilTarget.currentSession().save(awp);
 	}
 
 	@Test
@@ -83,7 +83,7 @@ public class JUnitTest {
 		w.setMerchantInfoId(null);
 		w.setWL3Key1("KEY1:" + UUID.randomUUID().toString());
 		w.setWL3Key2("KEY2:" + UUID.randomUUID().toString());
-		HibernateUtil.currentSession().save(w);
+		HibernateUtilTarget.currentSession().save(w);
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class JUnitTest {
 		p.createMetaData("key-1", "Object value 1:" + i + " A");
 		p.createMetaData("key-2", "Object value 2:" + i + " AA");
 		p.createMetaData("key-3", "Object value 3:" + i + " AAA");
-		HibernateUtil.currentSession().save(p);
+		HibernateUtilTarget.currentSession().save(p);
 	}
 
 }

@@ -10,7 +10,7 @@
 
 	<session-factory>
 
-		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
 		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/HiberTest?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=latin1</property>
 		<property name="connection.username">root</property>

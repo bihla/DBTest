@@ -68,12 +68,12 @@ public class AccountPlan extends PersistenceBase {
 				System.out.println(" acc=" + account);
 				System.out.println(" desc=" + desc);
 				AccountPlan ap = new AccountPlan(account, desc);
-				HibernateUtil.currentSession().save(ap);
+				HibernateUtilTarget.currentSession().save(ap);
 				// read next line
 				encodedWithISO88591 = reader.readLine();
 			}
 			reader.close();
-			HibernateUtil.currentSession().flush();
+			HibernateUtilTarget.currentSession().flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -81,7 +81,7 @@ public class AccountPlan extends PersistenceBase {
 
 	@Transient
 	public static AccountPlan getByAccountNumber(String accountNumber) {
-		return (AccountPlan) HibernateUtil.currentSession()
+		return (AccountPlan) HibernateUtilTarget.currentSession()
 				.createQuery("FROM AccountPlan WHERE AccountNumber = :anumber")
 				.setParameter("anumber", accountNumber)
 				.uniqueResult();

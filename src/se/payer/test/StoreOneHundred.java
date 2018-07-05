@@ -8,7 +8,7 @@ import se.payer.persistence.AccountVerification;
 import se.payer.persistence.Article;
 import se.payer.persistence.ArticleAgreement;
 import se.payer.persistence.ArticleWebsitePrice;
-import se.payer.persistence.HibernateUtil;
+import se.payer.persistence.HibernateUtilTarget;
 import se.payer.persistence.OrderToken;
 import se.payer.persistence.Payment;
 import se.payer.persistence.PaymentDetail;
@@ -25,11 +25,19 @@ public class StoreOneHundred implements Runnable {
 	@Override
 	public void run() {
 		long threadId = Thread.currentThread().getId();
-		HibernateUtil.currentSession().beginTransaction();
-		logger.info("Thread " + threadId + " started. StartId:" + startId);
+		
+		String start = "Thread " + threadId + " started. StartId:" + startId;
+		String end = "Thread " + threadId + " ended. StartId:" + startId;
+
+		HibernateUtilTarget.currentSession().beginTransaction();
+
+		System.out.println(start);
+		logger.info(start);
 		createOneHundred(startId);
-		HibernateUtil.currentSession().getTransaction().commit();
-		logger.info("Thread " + threadId + " ended.");
+		logger.info(end);
+		System.out.println(end);
+
+		HibernateUtilTarget.currentSession().getTransaction().commit();
 	}
 
 	public void createOneHundred(int j) {
@@ -39,12 +47,12 @@ public class StoreOneHundred implements Runnable {
 			a.setWebsiteId("PR_EXAMPLES");
 			a.setArticleNo("ArticleNo i:" + i + ", j:" + j);
 			a.setArticleDescription("Thread: " + threadId);
-			HibernateUtil.currentSession().save(a);
+			HibernateUtilTarget.currentSession().save(a);
 
 			ArticleAgreement aa = new ArticleAgreement();
 			aa.setWebsiteId("PR_EXAMPLES");
 			aa.setArticleNo("ArticleNo:" + i);
-			HibernateUtil.currentSession().save(aa);
+			HibernateUtilTarget.currentSession().save(aa);
 
 			ArticleWebsitePrice awp = new ArticleWebsitePrice();
 			awp.setWebsiteId("PR_EXAMPLES");
@@ -55,13 +63,13 @@ public class StoreOneHundred implements Runnable {
 			awp.setDefaultUnit("st");
 			awp.setDefaultPeriodicity("once");
 			awp.setDefaultVat(0);
-			HibernateUtil.currentSession().save(awp);
+			HibernateUtilTarget.currentSession().save(awp);
 
 			Website w = new Website("WS_" + i, "Name_of_website_" + i);
 			w.setMerchantInfoId(null);
 			w.setWL3Key1("KEY1:" + UUID.randomUUID().toString());
 			w.setWL3Key2("KEY2:" + UUID.randomUUID().toString());
-			HibernateUtil.currentSession().save(w);
+			HibernateUtilTarget.currentSession().save(w);
 			{
 				OrderToken p = new OrderToken("Object " + i, "PAYMENT_LINK");
 				p.createMetaData("key-1", "Object value 1:" + i + " A");
@@ -69,11 +77,11 @@ public class StoreOneHundred implements Runnable {
 				p.createMetaData("key-3", "Object value 3:" + i + " AAA");
 				p.createMetaData("key-4", "Object value 4:" + i + " AAAA");
 				p.createMetaData("key-5", "Object value 5:" + i + " AAAAA");
-				HibernateUtil.currentSession().save(p);
+				HibernateUtilTarget.currentSession().save(p);
 			}
 			{
 				Payment p = new Payment();
-				HibernateUtil.currentSession().save(p);
+				HibernateUtilTarget.currentSession().save(p);
 
 				PaymentDetail pd1 = new PaymentDetail(p, "First one:" + i);
 				PaymentDetail pd2 = new PaymentDetail(p, "First second:" + i, 1.0);
@@ -85,21 +93,20 @@ public class StoreOneHundred implements Runnable {
 				pd3.fake(null);
 				pd4.fake("3-54321-" + i);
 
-				HibernateUtil.currentSession().save(pd1);
-				HibernateUtil.currentSession().save(pd2);
-				HibernateUtil.currentSession().save(pd3);
-				HibernateUtil.currentSession().save(pd4);
-				HibernateUtil.currentSession().save(pd5);
+				HibernateUtilTarget.currentSession().save(pd1);
+				HibernateUtilTarget.currentSession().save(pd2);
+				HibernateUtilTarget.currentSession().save(pd3);
+				HibernateUtilTarget.currentSession().save(pd4);
+				HibernateUtilTarget.currentSession().save(pd5);
 			}
 			{
 				AccountVerification avX = new AccountVerification("Verifikat #" + i);
 				avX.addAccount("1910", 100.0 * i / 100L);
 				avX.addAccount("3010", -75.0 * i / 100L);
 				avX.addAccount("2611", -25.0 * i / 100L);
-				HibernateUtil.currentSession().save(avX);
+				HibernateUtilTarget.currentSession().save(avX);
 			}
 		}
-
 	}
 
 }

@@ -220,7 +220,7 @@ public class FactoringInvoicePayment extends PersistenceBase {
 	@Transient
 	@SuppressWarnings("unchecked")
 	public static List<FactoringInvoicePayment> getByInvoiceNumber(String invoiceNumber) {
-		List<FactoringInvoicePayment> fip = (List<FactoringInvoicePayment>) HibernateUtil.currentSession()
+		List<FactoringInvoicePayment> fip = (List<FactoringInvoicePayment>) HibernateUtilTarget.currentSession()
 				.createQuery("FROM FactoringInvoicePayment WHERE InvoiceNumber=:ino")
 				.setParameter("ino", invoiceNumber)
 				.list();

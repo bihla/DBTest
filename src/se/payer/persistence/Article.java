@@ -146,7 +146,7 @@ public class Article extends PersistenceBase {
 
 	public static Article getArticle(String articleNo) {
 
-		Article article = (Article) HibernateUtil.currentSession().createQuery("FROM Article WHERE ArticleNo = :p1")
+		Article article = (Article) HibernateUtilTarget.currentSession().createQuery("FROM Article WHERE ArticleNo = :p1")
 				.setParameter("p1", articleNo).uniqueResult();
 
 		return article;
@@ -155,7 +155,7 @@ public class Article extends PersistenceBase {
 
 	public static Article getArticle(String websiteId, String articleNo) {
 
-		Article article = (Article) HibernateUtil.currentSession()
+		Article article = (Article) HibernateUtilTarget.currentSession()
 				.createQuery("FROM Article WHERE WebsiteId = :p1 AND ArticleNo = :p2").setParameter("p1", websiteId)
 				.setParameter("p2", articleNo).uniqueResult();
 
