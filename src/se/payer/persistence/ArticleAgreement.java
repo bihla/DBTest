@@ -9,40 +9,40 @@ import javax.persistence.*;
 public class ArticleAgreement extends PersistenceBase {
 
 	@Column(name = "WebsiteId", length = 40)
-	private String WebsiteId;
+	private String websiteId;
 
 	@Column(name = "ArticleNo", length = 64)
-	private String ArticleNo;
+	private String articleNo;
 
 	@Column(name = "AgreementStoreId")
-	private Integer AgreementStoreId;
+	private Integer agreementStoreId;
 
 	public ArticleAgreement() {
 		super();
 	}
 
 	public String getWebsiteId() {
-		return WebsiteId;
+		return this.websiteId;
 	}
 
 	public void setWebsiteId(String websiteId) {
-		WebsiteId = websiteId;
+		this.websiteId = websiteId;
 	}
 
 	public String getArticleNo() {
-		return ArticleNo;
+		return this.articleNo;
 	}
 
 	public void setArticleNo(String articleNo) {
-		ArticleNo = articleNo;
+		this.articleNo = articleNo;
 	}
 
 	public Integer getAgreementStoreId() {
-		return AgreementStoreId;
+		return this.agreementStoreId;
 	}
 
 	public void setAgreementStoreId(Integer agreementStoreId) {
-		AgreementStoreId = agreementStoreId;
+		this.agreementStoreId = agreementStoreId;
 	}
 
 }

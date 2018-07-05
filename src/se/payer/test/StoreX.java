@@ -14,18 +14,21 @@ import se.payer.persistence.Payment;
 import se.payer.persistence.PaymentDetail;
 import se.payer.persistence.Website;
 
-public class StoreOneHundred implements Runnable {
-	static Logger logger = Logger.getLogger(StoreOneHundred.class);
-	int startId;
+public class StoreX implements Runnable {
+	static Logger logger = Logger.getLogger(StoreX.class);
 
-	public StoreOneHundred(int startId) {
+	long startId;
+	long numberOfUnits;
+
+	public StoreX(long startId, long numberOfUnits) {
 		this.startId = startId;
+		this.numberOfUnits = numberOfUnits;
 	}
 
 	@Override
 	public void run() {
 		long threadId = Thread.currentThread().getId();
-		
+
 		String start = "Thread " + threadId + " started. StartId:" + startId;
 		String end = "Thread " + threadId + " ended. StartId:" + startId;
 
@@ -33,16 +36,18 @@ public class StoreOneHundred implements Runnable {
 
 		System.out.println(start);
 		logger.info(start);
-		createOneHundred(startId);
+		createX(startId);
 		logger.info(end);
 		System.out.println(end);
 
 		HibernateUtilTarget.currentSession().getTransaction().commit();
 	}
 
-	public void createOneHundred(int j) {
-		for (int i = j * 100; i < (j * 100 + 100); i++) {
+	public void createX(long j) {
+		for (long i = j * numberOfUnits; i < (j * numberOfUnits + numberOfUnits); i++) {
+
 			long threadId = Thread.currentThread().getId();
+
 			Article a = new Article();
 			a.setWebsiteId("PR_EXAMPLES");
 			a.setArticleNo("ArticleNo i:" + i + ", j:" + j);
@@ -100,11 +105,16 @@ public class StoreOneHundred implements Runnable {
 				HibernateUtilTarget.currentSession().save(pd5);
 			}
 			{
-				AccountVerification avX = new AccountVerification("Verifikat #" + i);
-				avX.addAccount("1910", 100.0 * i / 100L);
-				avX.addAccount("3010", -75.0 * i / 100L);
-				avX.addAccount("2611", -25.0 * i / 100L);
-				HibernateUtilTarget.currentSession().save(avX);
+				try {
+					AccountVerification avX = new AccountVerification("Verifikat #" + i);
+					avX.addAccount("1910", 100.0 * i / 100L);
+					avX.addAccount("3010", -75.0 * i / 100L);
+					avX.addAccount("2611", -25.0 * i / 100L);
+					avX.commit();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}

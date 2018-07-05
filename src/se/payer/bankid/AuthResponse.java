@@ -15,21 +15,8 @@ public class AuthResponse {
 */
 	public String toString() {
 		return "[PaymentResponse]"
-				+",id="+id
-				+",payeePaymentReference="+payeePaymentReference
-				+",paymentReference="+paymentReference
-				+",callbackUrl="+callbackUrl
-				+",payerAlias="+payerAlias
-				+",payeeAlias="+payeeAlias
-				+",amount="+amount
-				+",currency="+currency
-				+",message="+message
-				+",status="+status
-				+",dateCreated="+dateCreated
-				+",datePaid="+datePaid
-				+",errorCode="+errorCode
-				+",errorMessage="+errorMessage
-				+",additionalInformation="+additionalInformation
+				+",orderRef="+orderRef
+				+",autoStartToken="+autoStartToken
 				+"";
 	}
 }

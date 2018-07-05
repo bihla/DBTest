@@ -1,4 +1,5 @@
 AccountNumber	AccountName
+0XXX	Interna konton
 1XXX	Tillgångar som kassa, bank och kundfordringar
 2XXX	Skulder och eget kapital
 3XXX	Intäkter för exempelvis försäljning
@@ -8,7 +9,6 @@ AccountNumber	AccountName
 7XXX	Kostnader för personal
 8XXX	Finansiella poster
 9XXX	Interna konton
-0XXX	Interna konton
 1010	Balanserade utgifter
 1011	Balanserade utgifter för forskning och utveckling
 1012	Balanserade utgifter för programvaror

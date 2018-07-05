@@ -511,84 +511,70 @@ public class ClientCustomSSL {
 		try {
 			final KeyStore keyStore = KeyStore.getInstance(AndroidKeyStore);
 			URL ksUrl = Resources.getResource(keyStoreFile);
-	        File ksFile = new File(ksUrl.toURI());
-	        URL tsUrl = Resources.getResource(keyStoreFile);
-	        File tsFile = new File(tsUrl.toURI());
-	        
+			File ksFile = new File(ksUrl.toURI());
+			URL tsUrl = Resources.getResource(keyStoreFile);
+			File tsFile = new File(tsUrl.toURI());
+
 			String trustStoreX = System.getProperty("javax.net.ssl.trustStore");
-	        if (trustStoreX == null) {
-	        	logger.debug("javax.net.ssl.trustStore is not defined");
-	        } else {
-	        	logger.debug("javax.net.ssl.trustStore = " + trustStoreX);
-	        }
-			
-	        try {
-	            ClientCustomSSL.class.getResource("trustStore.jks").getFile();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+			if (trustStoreX == null) {
+				logger.debug("javax.net.ssl.trustStore is not defined");
+			} else {
+				logger.debug("javax.net.ssl.trustStore = " + trustStoreX);
+			}
 
-	        trustStoreX = System.getProperty("javax.net.ssl.trustStore");
+			try {
+				ClientCustomSSL.class.getResource("trustStore.jks").getFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-	        if (trustStoreX == null) {
-	            String storeLoc;
-	            storeLoc = System.getProperty("java.class.path");
-	            logger.debug("classpath: " + storeLoc);
-	        }
+			trustStoreX = System.getProperty("javax.net.ssl.trustStore");
 
-	        trustStoreX = System.getProperty("javax.net.ssl.trustStore");
-	        if (trustStoreX == null) {
-	        	logger.debug("javax.net.ssl.trustStore is not defined");
-	        } else {
-	        	logger.debug("javax.net.ssl.trustStore = " + trustStoreX);
-	        }
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-			
-		logger.debug("pkcs12");
-		KeyStore clientStore = KeyStore.getInstance("PKCS12");
-		logger.debug("load:"+clientCertTest);
-		clientStore.load(new FileInputStream(clientCertTest), "qwerty123".toCharArray());
-		logger.debug("loaded #pkcs12");
+			if (trustStoreX == null) {
+				String storeLoc;
+				storeLoc = System.getProperty("java.class.path");
+				logger.debug("classpath: " + storeLoc);
+			}
 
-		logger.debug("KeyManagerFactory");
-		KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-		kmf.init(clientStore, "qwerty123".toCharArray());
-		KeyManager[] kms = kmf.getKeyManagers();
-		logger.debug("OK");
+			trustStoreX = System.getProperty("javax.net.ssl.trustStore");
+			if (trustStoreX == null) {
+				logger.debug("javax.net.ssl.trustStore is not defined");
+			} else {
+				logger.debug("javax.net.ssl.trustStore = " + trustStoreX);
+			}
 
-		logger.debug("KeyStore...");
-		KeyStore trustStore = KeyStore.getInstance("JKS");
-		logger.debug("load:"+caCert);
-		trustStore.load(new FileInputStream(caCert), null);
-		logger.debug("loaded...");
-		
-		TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-		tmf.init(trustStore);
-		TrustManager[] tms = tmf.getTrustManagers();
+			logger.debug("pkcs12");
+			KeyStore clientStore = KeyStore.getInstance("PKCS12");
+			logger.debug("load:" + clientCertTest);
+			clientStore.load(new FileInputStream(clientCertTest), "qwerty123".toCharArray());
+			logger.debug("loaded #pkcs12");
 
-		SSLContext sslContext = null;
-		sslContext = SSLContext.getInstance("TLS");
-		sslContext.init(kms, tms, new SecureRandom());
+			logger.debug("KeyManagerFactory");
+			KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+			kmf.init(clientStore, "qwerty123".toCharArray());
+			KeyManager[] kms = kmf.getKeyManagers();
+			logger.debug("OK");
 
-		HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-		URL url = new URL(getAuthRequestURL());
+			logger.debug("KeyStore...");
+			KeyStore trustStore = KeyStore.getInstance("JKS");
+			logger.debug("load:" + caCert);
+			trustStore.load(new FileInputStream(caCert), null);
+			logger.debug("loaded...");
 
-		HttpsURLConnection urlConn = (HttpsURLConnection) url.openConnection();
+			TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+			tmf.init(trustStore);
+			TrustManager[] tms = tmf.getTrustManagers();
+
+			SSLContext sslContext = null;
+			sslContext = SSLContext.getInstance("TLS");
+			sslContext.init(kms, tms, new SecureRandom());
+
+			HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+			URL url = new URL(getAuthRequestURL());
+
+			HttpsURLConnection urlConn = (HttpsURLConnection) url.openConnection();
 		} catch (Exception e) {
-			logger.debug("Exception:"+e.getMessage(), e);
+			logger.debug("Exception:" + e.getMessage(), e);
 		}
 	}
 

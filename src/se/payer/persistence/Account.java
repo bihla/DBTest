@@ -5,7 +5,7 @@ import javax.persistence.*;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Account", indexes = {
-		@Index(name = "index_AccountNumber_uniq", columnList = "Id,AccountNumber", unique = true),
+		@Index(name = "index_AccountNumber_uniq", columnList = "AccountVerificationId,AccountNumber", unique = true),
 		@Index(name = "index_AccountNumber_fast", columnList = "AccountNumber", unique = false) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "Type")

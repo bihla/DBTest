@@ -10,34 +10,34 @@ import javax.persistence.*;
 
 public class Article extends PersistenceBase {
 	@Column(name = "WebsiteId", length = 40)
-	private String WebsiteId;
+	private String websiteId;
 
 	@Column(name = "ArticleNo", length = 64)
-	private String ArticleNo;
+	private String articleNo;
 	
 	@Column(name = "ArticleDescription", length = 255)
-	private String ArticleDescription;
+	private String articleDescription;
 	
 	@Column(name = "ArticleTemplate", length = 64)
-	private String ArticleTemplate;
+	private String articleTemplate;
 	
 	@Column(name = "DefaultPeriodicity", length = 16)
-	private String DefaultPeriodicity;
+	private String defaultPeriodicity;
 	
 	@Column(name = "DefaultPeriod")
-	private int DefaultPeriod;
+	private int defaultPeriod;
 	
 	@Column(name = "DefaultPrice")
-	private double DefaultPrice;
+	private double defaultPrice;
 	
 	@Column(name = "DefaultUnit", length = 32)
-	private String DefaultUnit;
+	private String defaultUnit;
 	
 	@Column(name = "DefaultVat")
-	private double DefaultVat;
+	private double defaultVat;
 	
 	@Column(name = "DefaultCustomerAccountId", length = 16)
-	private String DefaultCustomerAccountId;
+	private String defaultCustomerAccountId;
 
 	public Article() {
 		super();
@@ -51,97 +51,97 @@ public class Article extends PersistenceBase {
 
 		super();
 
-		this.WebsiteId = websiteId;
-		this.ArticleNo = articleNo;
-		this.ArticleDescription = articleDescription;
-		this.ArticleTemplate = articleTemplate;
-		this.DefaultPeriodicity = defaultPeriodicity;
-		this.DefaultPeriod = defaultPeriod;
-		this.DefaultPrice = defaultPrice;
-		this.DefaultUnit = defaultUnit;
-		this.DefaultVat = defaultVat;
-		this.DefaultCustomerAccountId = defaultCustomerAccountId;
+		this.websiteId = websiteId;
+		this.articleNo = articleNo;
+		this.articleDescription = articleDescription;
+		this.articleTemplate = articleTemplate;
+		this.defaultPeriodicity = defaultPeriodicity;
+		this.defaultPeriod = defaultPeriod;
+		this.defaultPrice = defaultPrice;
+		this.defaultUnit = defaultUnit;
+		this.defaultVat = defaultVat;
+		this.defaultCustomerAccountId = defaultCustomerAccountId;
 
 	}
 
 	public String getWebsiteId() {
-		return WebsiteId;
+		return this.websiteId;
 	}
 
 	public void setWebsiteId(String websiteId) {
-		WebsiteId = websiteId;
+		this.websiteId = websiteId;
 	}
 
 	public String getArticleNo() {
-		return ArticleNo;
+		return this.articleNo;
 	}
 
 	public void setArticleNo(String articleNo) {
-		ArticleNo = articleNo;
+		this.articleNo = articleNo;
 	}
 	
 	public String getArticleDescription() {
-		return ArticleDescription;
+		return this.articleDescription;
 	}
 
 	public void setArticleDescription(String articleDescription) {
-		ArticleDescription = articleDescription;
+		this.articleDescription = articleDescription;
 	}
 
 	public String getArticleTemplate() {
-		return ArticleTemplate;
+		return this.articleTemplate;
 	}
 
 	public void setArticleTemplate(String articleTemplate) {
-		ArticleTemplate = articleTemplate;
+		this.articleTemplate = articleTemplate;
 	}
 
 	public String getDefaultPeriodicity() {
-		return DefaultPeriodicity;
+		return this.defaultPeriodicity;
 	}
 
 	public void setDefaultPeriodicity(String defaultPeriodicity) {
-		DefaultPeriodicity = defaultPeriodicity;
+		this.defaultPeriodicity = defaultPeriodicity;
 	}
 
 	public int getDefaultPeriod() {
-		return DefaultPeriod;
+		return defaultPeriod;
 	}
 
 	public void setDefaultPeriod(int defaultPeriod) {
-		DefaultPeriod = defaultPeriod;
+		this.defaultPeriod = defaultPeriod;
 	}
 
 	public double getDefaultPrice() {
-		return DefaultPrice;
+		return this.defaultPrice;
 	}
 
 	public void setDefaultPrice(double defaultPrice) {
-		DefaultPrice = defaultPrice;
+		this.defaultPrice = defaultPrice;
 	}
 
 	public String getDefaultUnit() {
-		return DefaultUnit;
+		return this.defaultUnit;
 	}
 
 	public void setDefaultUnit(String defaultUnit) {
-		DefaultUnit = defaultUnit;
+		this.defaultUnit = defaultUnit;
 	}
 
 	public double getDefaultVat() {
-		return DefaultVat;
+		return this.defaultVat;
 	}
 
 	public void setDefaultVat(double defaultVat) {
-		DefaultVat = defaultVat;
+		this.defaultVat = defaultVat;
 	}
 
 	public String getDefaultCustomerAccountId() {
-		return DefaultCustomerAccountId;
+		return this.defaultCustomerAccountId;
 	}
 
 	public void setDefaultCustomerAccountId(String defaultCustomerAccountId) {
-		DefaultCustomerAccountId = defaultCustomerAccountId;
+		this.defaultCustomerAccountId = defaultCustomerAccountId;
 	}
 
 	public static Article getArticle(String articleNo) {

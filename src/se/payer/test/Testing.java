@@ -9,7 +9,7 @@ public class Testing {
 	private HibernateUtilTarget hibernateUtilTarget = new HibernateUtilTarget();
 	private HibernateUtilSource hibernateUtilSource = new HibernateUtilSource();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Logger logger = Logger.getLogger(Testing.class);
 
 		// TODO Auto-generated method stub
@@ -33,13 +33,24 @@ public class Testing {
 			av1.addAccount("1010", 100.0);
 			av1.addAccount("2010", -80.0);
 			av1.addAccount("3011", -20.0);
-			HibernateUtilTarget.currentSession().save(av1);
+			av1.commit();
 
 			AccountVerification av2 = new AccountVerification("Verifikat #2");
 			av2.addAccount("1010", 200.0);
 			av2.addAccount("2010", -160.0);
 			av2.addAccount("3011", -40.0);
-			HibernateUtilTarget.currentSession().save(av2);
+			av2.commit();
+
+			try {
+				AccountVerification av3 = new AccountVerification("Verifikat #3 (exception)");
+				av3.addAccount("1010", 300.0);
+				av3.addAccount("2010", -160.0);
+				av3.addAccount("3011", -40.0);
+				av3.commit();
+			
+			} catch (Exception e) {
+				logger.debug("Exception caught - OK (expected)", e);
+			}
 
 			if (true) {
 				PaymentLog pl1 = new PaymentLog(100.0, "SEK");
@@ -63,7 +74,8 @@ public class Testing {
 				avX.addAccount("3044", -30.0 * j);
 				avX.addAccount("2611", -20.0 * j);
 				avX.addAccount("2612", -10.0 * j);
-				HibernateUtilTarget.currentSession().save(avX);
+				avX.commit();
+
 				if (j % 10 == 0) {
 					System.out.println("AccountVerification:" + j);
 					HibernateUtilTarget.currentSession().flush();
@@ -94,7 +106,7 @@ public class Testing {
 		HibernateUtilTarget.currentSession().getTransaction().commit();
 
 		for (int i = 1; i <= 50; i++) {
-			new Thread(new StoreOneHundred(i)).start();
+			new Thread(new StoreX(i, 1000)).start();
 		}
 
 		HibernateUtilTarget.currentSession().beginTransaction();

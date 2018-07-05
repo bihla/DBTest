@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -11,11 +12,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "AccountPlan", indexes = {
 		@Index(name = "AccountNumber_uniq", columnList = "AccountNumber", unique = true) })
-
 public class AccountPlan extends PersistenceBase {
-
 	@Column(name = "AccountNumber", length = 16)
-	private String AccountNumber;
+	private String accountNumber;
+
+	@Column(name = "CreateDate")
+	private Date createDate = new Date();
 
 	@Column(name = "Description", length = 255)
 	private String description;
@@ -25,22 +27,22 @@ public class AccountPlan extends PersistenceBase {
 	}
 
 	public AccountPlan(String accountNumber, String description) {
-		this.AccountNumber = accountNumber;
+		this.accountNumber = accountNumber;
 		this.description = description;
 	}
 
 	// Getters and Setters
 
 	public String getAccountNumber() {
-		return AccountNumber;
+		return this.accountNumber;
 	}
 
 	public void setAccountNumber(String accountNumber) {
-		AccountNumber = accountNumber;
+		this.accountNumber = accountNumber;
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
@@ -82,8 +84,7 @@ public class AccountPlan extends PersistenceBase {
 	@Transient
 	public static AccountPlan getByAccountNumber(String accountNumber) {
 		return (AccountPlan) HibernateUtilTarget.currentSession()
-				.createQuery("FROM AccountPlan WHERE AccountNumber = :anumber")
-				.setParameter("anumber", accountNumber)
+				.createQuery("FROM AccountPlan WHERE AccountNumber = :anumber").setParameter("anumber", accountNumber)
 				.uniqueResult();
 	}
 
