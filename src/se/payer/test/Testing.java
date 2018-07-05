@@ -196,7 +196,9 @@ public class Testing {
 			HibernateUtilTarget.currentSession().update(p1);
 			HibernateUtilTarget.currentSession().getTransaction().commit();
 		}
-
+		
+		logger.debug("#Testing ended");
+		System.out.println("#Testing ended");
 	}
 
 }

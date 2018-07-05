@@ -509,12 +509,13 @@ public class ClientCustomSSL {
 
 	public void pkcs12() {
 		try {
+/*
 			final KeyStore keyStore = KeyStore.getInstance(AndroidKeyStore);
 			URL ksUrl = Resources.getResource(keyStoreFile);
 			File ksFile = new File(ksUrl.toURI());
 			URL tsUrl = Resources.getResource(keyStoreFile);
 			File tsFile = new File(tsUrl.toURI());
-
+*/
 			String trustStoreX = System.getProperty("javax.net.ssl.trustStore");
 			if (trustStoreX == null) {
 				logger.debug("javax.net.ssl.trustStore is not defined");
