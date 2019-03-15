@@ -42,7 +42,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	public void test_method_1() {
+	public void test_Article_1() {
 
 		System.out.println("@Test - test_method_1");
 		Article a = new Article();
@@ -53,7 +53,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	public void test_method_2() {
+	public void test_ArticleAgreement_2() {
 		System.out.println("@Test - test_method_2");
 		ArticleAgreement aa = new ArticleAgreement();
 		aa.setWebsiteId("PR_EXAMPLES");
@@ -62,7 +62,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	public void test_method_3() {
+	public void test_ArticleWebsitePrice_3() {
 		System.out.println("@Test - test_method_3");
 		ArticleWebsitePrice awp = new ArticleWebsitePrice();
 		awp.setWebsiteId("PR_EXAMPLES");
@@ -77,7 +77,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	public void test_method_4() {
+	public void test_Website_4() {
 		System.out.println("@Test - test_method_4");
 		Website w = new Website("WS_" + i, "Name_of_website_" + i);
 		w.setMerchantInfoId(null);
@@ -87,7 +87,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	public void test_method_5() {
+	public void test_OrderToken_5() {
 		System.out.println("@Test - test_method_5");
 		OrderToken p = new OrderToken("Object " + i, "PAYMENT_LINK");
 		p.createMetaData("key-1", "Object value 1:" + i + " A");

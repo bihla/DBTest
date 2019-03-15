@@ -6,8 +6,8 @@ import se.payer.persistence.*;
 
 public class Testing {
 
-	private HibernateUtilTarget hibernateUtilTarget = new HibernateUtilTarget();
 	private HibernateUtilSource hibernateUtilSource = new HibernateUtilSource();
+	private HibernateUtilTarget hibernateUtilTarget = new HibernateUtilTarget();
 
 	public static void main(String[] args) throws Exception {
 		Logger logger = Logger.getLogger(Testing.class);
@@ -25,6 +25,19 @@ public class Testing {
 
 			HibernateUtilTarget.currentSession().getTransaction().commit();
 		}
+		
+		if (true) {
+			
+			HibernateUtilSource.currentSession().beginTransaction();
+			for (ChargeLog c: ChargeLog.getLastNdaysByWebsiteId("PR_EXAMPLES", 30, 100)) {
+				FactoringInvoiceHeader fih = FactoringInvoiceHeader.getFactoringInvoiceHeaderByChargeLogId(c.getId());
+				if (fih!=null) {
+					logger.debug(fih.toString());
+				}
+			}
+			HibernateUtilSource.currentSession().getTransaction().commit();
+		}
+			
 		
 		if (true) {
 			logger.debug("Starting threads...");
