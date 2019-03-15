@@ -99,22 +99,15 @@ import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 
-/**
- * this class provides an interface to the legacy Chargelog database table. it's
- * intended ONLY for the CREATION of new database entries for bank payments, so
- * it may be lacking in functionality. FIXME: To use in any other context, test
- * thoroughly.
- * 
- * @author dahla
- * 
- */
+
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "ChargeLog")
 public class ChargeLog extends PersistenceBase {
 
 	// long id - inheritance

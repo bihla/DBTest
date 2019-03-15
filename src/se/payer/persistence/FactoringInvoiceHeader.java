@@ -260,7 +260,7 @@ import se.payread.common.CurrencyUtil;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "FactoringInvoiceHeader2")
+@Table(name = "FactoringInvoiceHeader")
 public class FactoringInvoiceHeader implements Serializable {
 
 	private static final transient Logger logger = Logger.getLogger(FactoringInvoiceHeader.class);

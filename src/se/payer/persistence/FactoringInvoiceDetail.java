@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "FactoringInvoiceDetail2")
+@Table(name = "FactoringInvoiceDetail")
 public class FactoringInvoiceDetail extends PersistenceBase {
 
 	private transient Logger logger = Logger.getLogger(FactoringInvoiceDetail.class);

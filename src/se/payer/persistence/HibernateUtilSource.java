@@ -11,13 +11,13 @@ public class HibernateUtilSource {
 	static {
 		try {
 			Configuration ac = new Configuration();
-							
+			
+			ac.addAnnotatedClass(ChargeLog.class);				
 			ac.addAnnotatedClass(FactoringInvoiceHeader.class);
 			ac.addAnnotatedClass(FactoringInvoiceDetail.class);
 			ac.addAnnotatedClass(FactoringInvoicePayment.class);
 			ac.addAnnotatedClass(Website.class);
 
-//			ac.addResource("hibernate-source.cfg.xml");
 			sessionFactory = ac.configure("hibernate-source.cfg.xml").buildSessionFactory();
 
 		} catch (Throwable ex) {

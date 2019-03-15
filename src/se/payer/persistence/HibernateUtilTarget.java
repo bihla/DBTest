@@ -30,9 +30,9 @@ public class HibernateUtilTarget {
 			ac.addAnnotatedClass(OrderToken.class);
 			ac.addAnnotatedClass(OrderTokenKeyValue.class);
 
-			ac.addAnnotatedClass(Website.class);
-			
-//			ac.addResource("hibernate-target.cfg.xml");
+			ac.addAnnotatedClass(EventStorage.class);
+//			ac.addAnnotatedClass(Website.class);
+
 			sessionFactory = ac.configure("hibernate-target.cfg.xml").buildSessionFactory();
 
 		} catch (Throwable ex) {

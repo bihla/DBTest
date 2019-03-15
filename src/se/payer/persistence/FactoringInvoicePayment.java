@@ -16,31 +16,6 @@ public class FactoringInvoicePayment extends PersistenceBase {
 
 	private transient Logger logger = Logger.getLogger(FactoringInvoicePayment.class);
 
-	/*
-	`Id` int(11) NOT NULL AUTO_INCREMENT,
-	  `FactoringInvoicePaymentBatchId` int(11) DEFAULT NULL,
-	  `FactoringPaymentProcessingBatchId` int(11) DEFAULT NULL,
-	  `CustomerNumber` varchar(40) DEFAULT NULL,
-	  `InvoiceNumber` bigint(16) DEFAULT NULL,
-	  `OrderNumber` varchar(32) DEFAULT NULL,
-	  `ReadDate` datetime DEFAULT NULL,
-	  `EventType` varchar(16) DEFAULT NULL,
-	  `PaymentDate` date DEFAULT NULL,
-	  `PaymentAmount` decimal(12,2) DEFAULT NULL,
-	  `PaymentReminderAmount` decimal(12,2) DEFAULT NULL,
-	  `AdjustmentDate` date DEFAULT NULL,
-	  `AdjustmentAmount` decimal(12,2) DEFAULT NULL,
-	  `CreditDate` date DEFAULT NULL,
-	  `CreditAmount` decimal(12,2) DEFAULT NULL,
-	  `Description` varchar(64) DEFAULT NULL,
-	  `OverdueDate` date DEFAULT NULL,
-	  `ReminderDate` date DEFAULT NULL,
-	  `ReminderAmount` decimal(12,2) DEFAULT NULL,
-	  `CollectionDate` date DEFAULT NULL,
-	  `InterestInvoiceDate` date DEFAULT NULL,
-	  `InterestInvoiceNumber` bigint(16) DEFAULT NULL,
-	  `ChargeLogId` int(11) DEFAULT NULL,
-*/	  
 	private String InvoiceNumber;
 	private String OrderNumber;
 	private Date ReadDate;

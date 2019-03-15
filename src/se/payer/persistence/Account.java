@@ -1,6 +1,8 @@
 package se.payer.persistence;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity

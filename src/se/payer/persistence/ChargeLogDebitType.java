@@ -50,10 +50,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "ChargeLogDebitType")
 public class ChargeLogDebitType extends PersistenceBase {
 
 	private String Name;
