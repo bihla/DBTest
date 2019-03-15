@@ -3,21 +3,18 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-
 <!-- https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/session-configuration.html -->
-
 <hibernate-configuration>
-
 	<session-factory>
 
-		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
-		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/HiberTest?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=latin1</property>
+		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/HiberTest?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">hohoho</property>
 
 		<!-- none (default value), create-only, drop, create, create-drop, validate, and update -->
-		<property name="hbm2ddl.auto">validate</property>
+		<property name="hbm2ddl.auto">create-drop</property>
 
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">64</property>
@@ -26,7 +23,7 @@
 		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
 
 		<!-- Echo all executed SQL to stdout -->
-		<property name="characterEncoding">utf8</property> 
+		<property name="characterEncoding">utf8</property>
 		<property name="show_sql">false</property>
 		<property name="format_sql">false</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
